@@ -6,8 +6,6 @@ require("dotenv").config();
 const client = new MongoClient(process.env.DB_URI);
 const ORD_URL = "https://turbo.ordinalswallet.com";
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const fetchInscriptions = async (offset) => {
   console.log(`Fethcing inscription list with offset: ${offset}...`);
   const res = await axios.get(`${ORD_URL}/inscriptions`, {
