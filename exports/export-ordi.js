@@ -1,5 +1,4 @@
 const fs = require("fs");
-const _ = require("underscore");
 const { MongoClient } = require("mongodb");
 
 require("dotenv").config();
@@ -41,7 +40,7 @@ const getValidInscriptions = async (tick) => {
     console.log(
       `$${tick} supply at inscription #${item.num}: ${currentSupply}/${maxSupply}`
     );
-    validInsctipitons.push({ ...item, currentSupply: currentSupply });
+    validInsctipitons.push({ ...item, currentSupply });
   }
   return validInsctipitons;
 };
