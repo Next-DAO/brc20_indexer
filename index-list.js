@@ -33,10 +33,10 @@ const indexList = async () => {
       const inscriptions = database.collection("inscriptions");
       const result = await inscriptions.insertMany(data, { ordered: false });
     } catch (e) {
-      if (e.name !== "MongoBulkWriteError") {
-        await client.close();
-        throw e;
+      if (e.name === "MongoBulkWriteError") {
+        break;
       }
+      throw e;
     }
   }
 
