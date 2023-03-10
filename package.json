@@ -1,0 +1,14 @@
+{
+  "name": "brc20_indexer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Next-DAO/brc20_indexer.git",
+  "author": "shep.eth <shep@nextdao.xyz>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.3.4",
+    "dotenv": "^16.0.3",
+    "mongodb": "^5.1.0",
+    "underscore": "^1.13.6"
+  }
+}

@@ -1,1 +1,1 @@
-# brc20_indexer
+# BRC20 Indexer
