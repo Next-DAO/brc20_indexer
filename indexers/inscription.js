@@ -16,7 +16,7 @@ const fetchInscriptions = async (offset) => {
   return res.data;
 };
 
-const indexList = async () => {
+const index = async () => {
   let offset = 0;
 
   while (true) {
@@ -42,4 +42,4 @@ const indexList = async () => {
   process.exit();
 };
 
-indexList();
+index();

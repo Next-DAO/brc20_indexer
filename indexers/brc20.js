@@ -18,7 +18,7 @@ const fetchMetadata = async (id) => {
   return res.data;
 };
 
-const indexBRC20 = async () => {
+const index = async () => {
   const database = client.db("ordinals");
   const inscriptions = database.collection("inscriptions");
 
@@ -54,4 +54,4 @@ const indexBRC20 = async () => {
   process.exit();
 };
 
-indexBRC20();
+index();
