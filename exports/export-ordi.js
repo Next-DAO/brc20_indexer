@@ -33,14 +33,31 @@ const getValidInscriptions = async (tick) => {
   const validInsctipitons = [];
 
   for (const item of data) {
-    currentSupply += item.content.amount;
-    if (currentSupply > maxSupply) {
+    let validAmount = item.content.amount;
+
+    currentSupply += validAmount;
+
+    // stop when supply exceeded limit for the first time
+    // but keep the last inscription as valid
+    if (currentSupply >= maxSupply) {
+      validAmount = maxSupply - (currentSupply - validAmount);
+      currentSupply = maxSupply;
+
+      console.log(
+        `$${tick} supply at inscription #${item.num}: ${currentSupply}/${maxSupply}`
+      );
+      validInsctipitons.push({
+        ...item,
+        currentSupply,
+        validAmount,
+      });
       break;
     }
+
     console.log(
       `$${tick} supply at inscription #${item.num}: ${currentSupply}/${maxSupply}`
     );
-    validInsctipitons.push({ ...item, currentSupply });
+    validInsctipitons.push({ ...item, currentSupply, validAmount });
   }
   return validInsctipitons;
 };
@@ -53,10 +70,10 @@ const exportOrdi = async () => {
     currentSupply: item.currentSupply,
     created: item.metadata.created,
     genesisHeight: item.metadata.genesis_height,
-    content: item.content,
+    validAmount: item.validAmount,
   }));
 
-  fs.writeFileSync("./ordi.json", JSON.stringify(exportData, null, 4));
+  fs.writeFileSync("./exports/ordi.json", JSON.stringify(exportData, null, 4));
 
   process.exit();
 };
