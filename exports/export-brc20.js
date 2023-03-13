@@ -63,8 +63,8 @@ const getValidInscriptions = async (tick) => {
   return validInsctipitons;
 };
 
-const exportOrdi = async () => {
-  const validInsctipitons = await getValidInscriptions("ordi");
+const exportBRC20 = async (tick) => {
+  const validInsctipitons = await getValidInscriptions(tick);
   const exportData = validInsctipitons.map((item) => ({
     inscriptionID: item.id,
     inscriptionNumber: item.num,
@@ -74,9 +74,19 @@ const exportOrdi = async () => {
     validAmount: item.validAmount,
   }));
 
-  fs.writeFileSync("./exports/ordi.json", JSON.stringify(exportData, null, 4));
+  fs.writeFileSync(
+    `./exports/${tick}.json`,
+    JSON.stringify(exportData, null, 4)
+  );
 
   process.exit();
 };
 
-exportOrdi();
+const args = process.argv;
+if (args.length <= 2) {
+  throw new Error("brc-20 tick not specified!");
+}
+
+const tick = args[2];
+
+exportBRC20(tick.trim().toLowerCase());
