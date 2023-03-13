@@ -26,6 +26,7 @@ const getValidInscriptions = async (tick) => {
       "content.op": "mint",
       "content.amount": { $lte: parseInt(deployment.content.lim, 10) },
     })
+    .collation({ locale: "en", strength: 2 })
     .sort({ num: 1 });
   const data = await cursor.toArray();
 
