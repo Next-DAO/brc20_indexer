@@ -10,5 +10,9 @@
     "dotenv": "^16.0.3",
     "mongodb": "^5.1.0",
     "underscore": "^1.13.6"
+  },
+  "scripts": {
+    "export": "node scripts/export.js",
+    "stats": "node scripts/stats.js"
   }
 }
