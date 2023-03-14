@@ -1,11 +1,4 @@
-const fs = require("fs");
-const { MongoClient } = require("mongodb");
-
-require("dotenv").config();
-
-const client = new MongoClient(process.env.DB_URI);
-
-const getValidInscriptions = async (tick) => {
+const getValidInscriptions = async (client, tick) => {
   const database = client.db("ordinals");
   const inscriptions = database.collection("inscriptions");
 
@@ -44,9 +37,6 @@ const getValidInscriptions = async (tick) => {
       validAmount = maxSupply - (currentSupply - validAmount);
       currentSupply = maxSupply;
 
-      console.log(
-        `$${tick} supply at inscription #${item.num}: ${currentSupply}/${maxSupply}`
-      );
       validInsctipitons.push({
         ...item,
         currentSupply,
@@ -55,38 +45,9 @@ const getValidInscriptions = async (tick) => {
       break;
     }
 
-    console.log(
-      `$${tick} supply at inscription #${item.num}: ${currentSupply}/${maxSupply}`
-    );
     validInsctipitons.push({ ...item, currentSupply, validAmount });
   }
   return validInsctipitons;
 };
 
-const exportBRC20 = async (tick) => {
-  const validInsctipitons = await getValidInscriptions(tick);
-  const exportData = validInsctipitons.map((item) => ({
-    inscriptionID: item.id,
-    inscriptionNumber: item.num,
-    currentSupply: item.currentSupply,
-    created: item.metadata.created,
-    genesisHeight: item.metadata.genesis_height,
-    validAmount: item.validAmount,
-  }));
-
-  fs.writeFileSync(
-    `./exports/${tick}.json`,
-    JSON.stringify(exportData, null, 4)
-  );
-
-  process.exit();
-};
-
-const args = process.argv;
-if (args.length <= 2) {
-  throw new Error("brc-20 tick not specified!");
-}
-
-const tick = args[2];
-
-exportBRC20(tick.trim().toLowerCase());
+module.exports = { getValidInscriptions };
