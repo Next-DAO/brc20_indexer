@@ -37,7 +37,7 @@ bash
 6. **Export data**: Run the provided export script to export the data:
 
    ```
-   node your-export-script-file.js your-tick-value
+   node scripts/export.js your-tick-value
    ```
    Replace your-tick-value and your-export-script-file.js with the appropriate tick value and export script filename, respectively.
 
